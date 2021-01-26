@@ -1,0 +1,110 @@
+% Macros for CV formatting.
+% Copyright (c) 2021, Michael Pascale.
+
+% Page setup (PDFTeX)
+\pdfpagewidth=8.5in
+\pdfpageheight=11in
+
+% Margins.
+\hoffset=-0.25in
+\voffset=-0.25in
+\vsize=9.50in
+\hsize=7.00in
+
+% Single spaced.
+\baselineskip=12pt
+
+% Define font sizes.
+\font\large=cmr10 at 24pt
+\font\medium=cmr10 at 18pt
+\font\small=cmr10 at 11pt
+\font\tiny=cmr10 at 10pt
+
+% Declare necessary registers.
+\newdimen\center
+\newbox\textbox
+\newdimen\centertext
+
+
+% Centered Text
+
+% Arguments:
+% Text to center
+
+\def\centered#1{
+
+    \center=\hsize
+    \divide \center by 2
+
+    \noindent\hbox{#1}\setbox\textbox\lastbox
+
+    \centertext=\wd\textbox
+    \divide \centertext by 2
+
+    \advance \center by -\centertext
+
+    \noindent\hskip\center #1
+}
+
+
+% Section Heading w/ Horizontal Rule
+
+% Arguments:
+% Section name
+
+\def\section#1{
+    \begingroup
+    \vskip 5mm \noindent \tiny #1 \vskip 1mm \hrule \vskip 2mm
+    \endgroup
+}
+
+
+% Indented Section (Left and Right Indent)
+
+% Arguments:
+% Text to indent
+
+\long\def\indented#1{
+    \par
+    \advance \leftskip by 5mm
+    \advance \rightskip by 5mm
+    \noindent #1\par
+    \advance \leftskip by -5mm
+    \advance \rightskip by -5mm
+}
+
+
+% Position or Education Listing
+
+% Arguments:
+% Title, Date, Institution, Place, Description
+
+\long\def\listing#1#2#3#4#5{
+    \begingroup
+    \noindent\bf #1 \small \hfill #2
+
+    \noindent #3 \hfill #4
+
+    \def\lastarg{#5}
+    \ifx \empty\lastarg
+    \else
+    \vskip 1mm \indented{\noindent #5}
+    \fi
+    \vskip 2mm
+    \endgroup
+}
+
+
+% Publication Listing w/ Hanging Indent
+
+% Arguments:
+% APA formatted citation
+
+\def\publisting#1{
+    \begingroup
+    \parindent=0mm
+    \hangindent=10mm
+    #1
+    \vskip 1mm
+    \endgroup
+}
