@@ -1,0 +1,73 @@
+% Alloccate Registers
+\newcount\hN
+\newcount\sN
+\newcount\pN
+\newcount\vN
+
+% Section Header
+% #1 Heading label
+\def\section#1{
+    \begingroup
+    \vskip 5mm \noindent \tiny #1 \vskip 1mm \hrule \vskip 2mm
+    \endgroup
+}
+
+% Indented Section
+% #1 Distance to indent
+% #2 Text to indent
+\long\def\indented#1#2{
+    \par
+    \advance \leftskip by #1
+    \advance \rightskip by #1
+    \noindent #2\par
+    \advance \leftskip by -#1
+    \advance \rightskip by -#1
+}
+
+
+% Heading
+% #1 Heading label
+\def\h#1{
+	\advance\hN1
+	\sN=0
+	\pN=0
+	\bf
+	\number\hN .\number\sN .\number\pN
+	\hskip 5mm #1\par
+	\rm
+	\vskip5mm
+}
+
+% Subheading
+% #1 Subheading label or paragraph text
+\def\s#1{
+	%\indented{10mm}{
+		\advance\sN1
+		\pN=0
+		\number\hN .\number\sN .\number\pN
+		\hskip 5mm #1\par
+	%}
+	\vskip5mm
+}
+
+% Paragraph
+% #1 Paragraph text
+\def\p#1{
+	\indented{10mm}{
+		\advance\pN1
+		\number\hN .\number\sN .\number\pN1
+		\hskip 5mm #1\par
+	}
+	\vskip5mm
+}
+
+% Insert Current Date (YYYY-MM-DD)
+\def\date{\number\year -\number\month -\number\day}
+
+% Insert Signature Line
+\def\signature{\hbox to 50mm{ \leaders\hrule\hfill}}
+
+% Insert Version Number
+% Decrements each time the version number is inserted.
+% First, set \vN to the current version.
+\def\version{\number\vN \advance\vN-1}
