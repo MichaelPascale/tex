@@ -1,6 +1,11 @@
 % Macros for CV formatting.
 % Copyright (c) 2021, Michael Pascale.
 
+% Use Extended Plain TeX Features
+\input eplain
+\enablehyperlinks
+\raggedbottom
+
 % Page setup (PDFTeX)
 \pdfpagewidth=8.5in
 \pdfpageheight=11in
@@ -30,10 +35,15 @@
 \font\bf=ptmb at 11pt
 \font\it=ptmri at 11pt
 
+%\font\large=ptmr at 24pt
+%\font\medium=ptmr at 18pt
+%\font\small=ptmr at 11pt
+%\font\tiny=ptmr at 10pt
 % Declare necessary registers.
 \newdimen\center
 \newbox\textbox
 \newdimen\centertext
+\newbox\bulletlenbox
 
 
 % Centered Text
@@ -64,7 +74,8 @@
 
 \def\section#1{
     \begingroup
-    \vskip 5mm \noindent \tiny #1 \vskip 1mm \hrule \vskip 2mm
+    \penalty-1000
+    \vskip 5mm \noindent\tiny #1 \vskip1mm\hrule \vskip2mm
     \endgroup
 }
 
@@ -93,17 +104,36 @@
     \begingroup
     \noindent\bf #1 \small \hfill #2
 
-    \noindent #3 \hfill #4
+    \penalty10000\noindent #3 \hfill #4
 
     \def\lastarg{#5}
     \ifx \empty\lastarg
     \else
-    \vskip 1mm \indented{\noindent #5}
+    \penalty10000\vskip 3mm \indented{\noindent #5}
+    \fi
+    \vskip 3mm
+    \endgroup
+}
+
+% Short Position or Education Listing
+
+% Arguments:
+% Title, Date, Institution, Place, Description
+
+\long\def\shortlisting#1#2#3#4#5{
+    \begingroup
+    \noindent\bf #1 \small \hfill #2
+
+    \penalty10000\noindent #3 \hfill #4
+
+    \def\lastarg{#5}
+    \ifx \empty\lastarg
+    \else
+    \penalty10000\noindent #5
     \fi
     \vskip 2mm
     \endgroup
 }
-
 
 % Publication Listing w/ Hanging Indent
 
@@ -118,3 +148,25 @@
     \vskip 1mm
     \endgroup
 }
+
+% Project Listing
+
+% Arguments:
+% Title, Authors/Metadata, Details, Body
+
+\long\def\project#1#2#3#4
+{\noindent\bi#1\small\par\penalty10000
+	\noindent #2 \vskip1mm\par\penalty10000
+    \noindent #3 \hfill #4\vskip 3mm
+}
+
+
+\def\projectitem#1{\setbox\bulletlenbox=\hbox{$\to$ }\vskip1mm\par\noindent\hangindent=\wd\bulletlenbox\hangafter=1 $\to$ #1}
+
+% Hyperlink
+
+% Arguments:
+% URL, Text
+
+\def\hl#1#2{\hlstart{url}{bstyle=U,bwidth=1,bcolor=.16 .78 .59}{#1}#2\hlend}
+\def\ml#1{\hl{mailto:#1}{#1}}
